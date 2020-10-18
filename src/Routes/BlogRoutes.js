@@ -1,9 +1,9 @@
 import { Router } from "express";
-import Validation from "../Middlewares/Validation";
+import BlogValidation from "../Middlewares/Validation/Blog";
 
 const router = Router();
 
-router.post("/add", Validation.blogFormValidation, (req, res) => {
+router.post("/add", BlogValidation.blogFormValidation, (req, res) => {
   res.status(200).json({});
 });
 

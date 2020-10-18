@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
-
-// console.log(process.env.JWT_KEY);
+import dotenv from "dotenv";
+dotenv.config();
 
 export const generateToken = (req, res, next) => {
-  let token = jwt.sign(req.body, "SECRET_KEY");
+  let token = jwt.sign(req.body, process.env.JWT_KEY);
   res.Token = token;
   next();
 };

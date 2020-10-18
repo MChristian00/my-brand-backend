@@ -1,12 +1,13 @@
 import express from "express";
 import { urlencoded, json } from "body-parser";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 import BlogRoutes from "./Routes/BlogRoutes";
 import UserRoutes from "./Routes/UserRoutes";
 import QueryRoutes from "./Routes/QueryRoutes";
 import SubscriptionRoutes from "./Routes/SubscriptionRoutes";
 
-require("dotenv").config;
+dotenv.config();
 
 const DB = mongoose.connection;
 
@@ -42,3 +43,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server started on PORT ${PORT}`);
 });
+
+export default app;
