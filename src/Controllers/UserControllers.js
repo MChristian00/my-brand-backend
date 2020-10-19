@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import User from "../Database/Models/User";
 export default class UserControllers {
-  static register = async (req, res) => {
+  static async register(req, res) {
     const { Firstname, Lastname, Email, Password } = req.body;
     try {
       let hash = bcrypt.hashSync(Password, 10);
@@ -25,9 +25,9 @@ export default class UserControllers {
     } catch (error) {
       res.status(100).send(error);
     }
-  };
+  }
 
-  static login = async (req, res) => {
+  static async login(req, res) {
     const { Email, Password } = req.body;
     try {
       await User.findOne(
@@ -52,9 +52,9 @@ export default class UserControllers {
     } catch (error) {
       res.status(400).send(error);
     }
-  };
+  }
 
-  static logout = async (req, res) => {
+  static async logout(req, res) {
     res.status(200).json({});
-  };
+  }
 }

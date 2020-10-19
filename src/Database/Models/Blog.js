@@ -18,7 +18,7 @@ let Blog = mongoose.model(
         required: true,
       },
       Picture: {
-        type: URL,
+        type: String,
       },
       Comments: { type: Array },
     },

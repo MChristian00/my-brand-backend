@@ -1,20 +1,22 @@
+import Blog from "../Database/Models/Blog";
+
 export default class BlogControllers {
-  static getAllBlogs = async (req, res) => {
+  static async getAllBlogs(req, res) {
     res.status(200).json({});
-  };
-  static getBlog = async (req, res) => {
+  }
+  static async getBlog(req, res) {
     res.status(200).json({});
-  };
-  static updateBlog = async (req, res) => {
+  }
+  static async updateBlog(req, res) {
     res.status(200).json({});
-  };
-  static commentBlog = async (req, res) => {
+  }
+  static async commentBlog(req, res) {
     res.status(200).json({});
-  };
-  static deleteBlog = async (req, res) => {
+  }
+  static async deleteBlog(req, res) {
     res.status(200).json({});
-  };
-  static addBlog = async (req, res) => {
+  }
+  static async addBlog(req, res) {
     res.status(200).json({});
-  };
+  }
 }
