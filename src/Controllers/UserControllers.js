@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import User from "../Database/Models/User";
+import { generateToken } from "../Helpers/generateToken";
+
 export default class UserControllers {
-  static register = async (req, res) => {
+  static async register(req, res) {
     const { Firstname, Lastname, Email, Password } = req.body;
     try {
       let hash = bcrypt.hashSync(Password, 10);
@@ -16,19 +18,26 @@ export default class UserControllers {
         },
         (err, user) => {
           if (err) return res.status(500).send(err);
+          let token = generateToken({
+            _id: user._id,
+            Firstname,
+            Lastname,
+            Email,
+          });
           res.status(201).json({
             Message: "User added",
-            User: user,
+            Token: token,
           });
         }
       );
     } catch (error) {
-      res.status(100).send(error);
+      res.status(400).send(error);
     }
-  };
+  }
 
-  static login = async (req, res) => {
+  static async login(req, res) {
     const { Email, Password } = req.body;
+    let token = generateToken({ Email, Password });
     try {
       await User.findOne(
         {
@@ -40,8 +49,7 @@ export default class UserControllers {
           if (isValid)
             return res.json({
               Message: "User successfully logged in",
-              Token: res.Token,
-              User: user,
+              Token: token,
             });
           else
             res.status(400).json({
@@ -52,9 +60,9 @@ export default class UserControllers {
     } catch (error) {
       res.status(400).send(error);
     }
-  };
+  }
 
-  static logout = async (req, res) => {
+  static async logout(req, res) {
     res.status(200).json({});
-  };
+  }
 }

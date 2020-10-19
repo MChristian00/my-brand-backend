@@ -1,6 +1,5 @@
 import { Router } from "express";
 import UserControllers from "../Controllers/UserControllers";
-import { generateToken } from "../Helpers/generateToken";
 import UserValidation from "../Middlewares/Validation/User";
 
 const router = Router();
@@ -14,7 +13,6 @@ router.post(
 router.post(
   "/signin",
   UserValidation.loginFormValidation,
-  generateToken,
   UserControllers.login
 );
 

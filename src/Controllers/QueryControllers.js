@@ -1,14 +1,16 @@
+import Query from "../Database/Models/Query";
+
 export default class QueryControllers {
-  static getAllQueries = async (req, res) => {
+  static async getAllQueries(req, res) {
     res.status(200).json({});
-  };
-  static getQuery = async (req, res) => {
+  }
+  static async getQuery(req, res) {
     res.status(200).json({});
-  };
-  static deleteQuery = async (req, res) => {
+  }
+  static async deleteQuery(req, res) {
     res.status(200).json({});
-  };
-  static addQuery = async (req, res) => {
+  }
+  static async addQuery(req, res) {
     res.status(200).json({});
-  };
+  }
 }
