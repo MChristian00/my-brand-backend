@@ -21,8 +21,6 @@ let Blog = mongoose.model(
         type: URL,
       },
       Comments: { type: Array },
-      //   viewsCount: { type: Number, default: 0 },
-      //   LikedBy: { type: Array },
     },
     {
       timestamps: true,

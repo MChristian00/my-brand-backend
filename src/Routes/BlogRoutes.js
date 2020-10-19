@@ -1,20 +1,17 @@
 import { Router } from "express";
+import BlogControllers from "../Controllers/BlogControllers";
 import BlogValidation from "../Middlewares/Validation/Blog";
 
 const router = Router();
 
-router.post("/add", BlogValidation.blogFormValidation, (req, res) => {
-  res.status(200).json({});
-});
+router.post("/add", BlogValidation.blogFormValidation, BlogControllers.addBlog);
 
-router.get("/", (req, res) => {
-  res.status(200).json({});
-});
+router.get("/", BlogControllers.getAllBlogs);
 
-router.get("/:id", (req, res) => {});
+router.get("/:id", BlogControllers.getBlog);
 
-router.put("/:id", (req, res) => {});
+router.put("/:id", BlogControllers.updateBlog);
 
-router.delete("/:id", (req, res) => {});
+router.delete("/:id", BlogControllers.deleteBlog);
 
 export default router;
