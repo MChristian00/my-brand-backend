@@ -16,6 +16,8 @@ router.post(
   UserControllers.login
 );
 
+router.put("/edit/:id", UserControllers.updateProfile);
+
 router.get("/logout", UserControllers.logout);
 
 export default router;

@@ -45,7 +45,9 @@ export default class UserControllers {
         },
         (err, user) => {
           if (err) return res.status(500).send(err);
-          let isValid = bcrypt.compareSync(Password, user.Password);
+          let isValid = user
+            ? bcrypt.compareSync(Password, user.Password)
+            : null;
           if (isValid)
             return res.json({
               Message: "User successfully logged in",
@@ -62,7 +64,32 @@ export default class UserControllers {
     }
   }
 
+  static async updateProfile(req, res) {
+    const { Email, Password } = req.body;
+    const { id } = req.params;
+    try {
+      let hash = bcrypt.hashSync(Password, 10);
+      await User.findByIdAndUpdate(
+        { _id: id },
+        {
+          Email,
+          Password: hash,
+        },
+        (err, user) => {
+          if (err) return res.status(500).send(err);
+          res.status(201).json({
+            Message: "User profile updated",
+          });
+        }
+      );
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+
   static async logout(req, res) {
-    res.status(200).json({});
+    res.status(200).json({
+      Message: "Successfully logged out",
+    });
   }
 }

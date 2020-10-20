@@ -40,6 +40,13 @@ app.use("/api/blogs", BlogRoutes);
 app.use("/api/auth", UserRoutes);
 app.use("/api/subscribe", SubscriptionRoutes);
 
+// For an unavailable route
+app.use((req, res, next) => {
+  res.status(404).json({
+    Message: "RESOURCE UNAVAILABLE",
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server started on PORT ${PORT}`);
