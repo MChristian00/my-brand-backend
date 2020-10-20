@@ -15,6 +15,7 @@ mongoose.connect("mongodb://localhost/MY_BRAND_DB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 //Listen to DB

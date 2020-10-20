@@ -12,6 +12,8 @@ router.get("/:id", BlogControllers.getBlog);
 
 router.put("/:id", BlogControllers.updateBlog);
 
+router.put("/comment/:id", BlogControllers.commentBlog);
+
 router.delete("/:id", BlogControllers.deleteBlog);
 
 export default router;

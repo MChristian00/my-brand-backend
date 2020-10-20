@@ -3,9 +3,9 @@ import Joi from "joi";
 export default class BlogValidation {
   static async blogFormValidation(req, res, next) {
     const SCHEMA = Joi.object({
-      BlogTitle: Joi.string().min(3).required(),
-      BlogContent: Joi.string().min(120).required(),
-      BlogPic: Joi.string().uri(),
+      Title: Joi.string().min(3).required(),
+      Content: Joi.string().min(120).required(),
+      Picture: Joi.string().uri(),
     });
     try {
       const { error } = SCHEMA.validate(req.body);
