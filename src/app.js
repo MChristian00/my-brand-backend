@@ -11,7 +11,7 @@ dotenv.config();
 
 const DB = mongoose.connection;
 
-mongoose.connect("mongodb://localhost/MY_BRAND_DB", {
+mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,

@@ -1,19 +1,30 @@
 import { Router } from "express";
 import BlogControllers from "../Controllers/BlogControllers";
+import { checkAdmin } from "../Middlewares/CheckAdmin";
+import { checkAuthToken } from "../Middlewares/CheckAuthToken";
 import BlogValidation from "../Middlewares/Validation/Blog";
 
 const router = Router();
+const { blogFormValidation } = BlogValidation;
+const {
+  addBlog,
+  getAllBlogs,
+  getBlog,
+  updateBlog,
+  commentBlog,
+  deleteBlog,
+} = BlogControllers;
 
-router.post("/add", BlogValidation.blogFormValidation, BlogControllers.addBlog);
+router.post("/add", blogFormValidation, [checkAuthToken], addBlog);
 
-router.get("/", BlogControllers.getAllBlogs);
+router.get("/", getAllBlogs);
 
-router.get("/:id", BlogControllers.getBlog);
+router.get("/:id", getBlog);
 
-router.put("/:id", BlogControllers.updateBlog);
+router.put("/:id", updateBlog);
 
-router.put("/comment/:id", BlogControllers.commentBlog);
+router.put("/comment/:id", checkAuthToken, commentBlog);
 
-router.delete("/:id", BlogControllers.deleteBlog);
+router.delete("/:id", deleteBlog);
 
 export default router;
