@@ -43,7 +43,7 @@ app.use("/api/subscribe", SubscriptionRoutes);
 // For an unavailable route
 app.use((req, res, next) => {
   res.status(404).json({
-    Message: "RESOURCE UNAVAILABLE",
+    Message: "URL UNAVAILABLE",
   });
 });
 
