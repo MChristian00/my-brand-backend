@@ -5,7 +5,7 @@ import { checkAuthToken } from "../Middlewares/CheckAuthToken";
 import BlogValidation from "../Middlewares/Validation/Blog";
 
 const router = Router();
-const { blogFormValidation } = BlogValidation;
+const { blogAddFormValidation } = BlogValidation;
 const {
   addBlog,
   getAllBlogs,
@@ -15,16 +15,21 @@ const {
   deleteBlog,
 } = BlogControllers;
 
-router.post("/add", blogFormValidation, [checkAuthToken], addBlog);
+router.post(
+  "/add",
+  blogAddFormValidation,
+  [checkAuthToken, checkAdmin],
+  addBlog
+);
 
 router.get("/", getAllBlogs);
 
 router.get("/:id", getBlog);
 
-router.put("/:id", updateBlog);
+router.put("/:id", [checkAuthToken, checkAdmin], updateBlog);
 
 router.put("/comment/:id", checkAuthToken, commentBlog);
 
-router.delete("/:id", deleteBlog);
+router.delete("/:id", [checkAuthToken, checkAdmin], deleteBlog);
 
 export default router;

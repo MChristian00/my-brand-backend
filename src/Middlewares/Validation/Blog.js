@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 export default class BlogValidation {
-  static async blogFormValidation(req, res, next) {
+  static async blogAddFormValidation(req, res, next) {
     const SCHEMA = Joi.object({
       Title: Joi.string().min(3).required(),
       Content: Joi.string().min(120).required(),

@@ -1,66 +1,41 @@
 import mongoose from "mongoose";
 import Query from "../Database/Models/Query";
 
-export default class QueryServices {
+export class QueryServices {
   static async getAllQueries() {
     try {
-      let Queries = await Query.find({});
-      return {
-        Status: 200,
-        Queries,
-      };
+      return await Query.find({});
     } catch (err) {
-      return {
-        statusCode: 500,
-        Error: err,
-      };
+      throw error;
     }
   }
 
-  static async addBlog(QueryOwner, Email, QueryContent) {
+  static async addQuery(QueryOwner, Email, QueryContent) {
     try {
-      let query = await Query.create({
+      return await Query.create({
+        _id: mongoose.Types.ObjectId(),
         QueryOwner,
         Email,
         QueryContent,
       });
-      return {
-        Status: 200,
-        Query: query,
-      };
     } catch (err) {
-      return {
-        statusCode: 500,
-        Error: err,
-      };
+      throw error;
     }
   }
+
   static async getQuery(id) {
     try {
-      let query = await Query.findById({ _id: id });
-      return {
-        Status: 200,
-        Query: query,
-      };
+      return await Query.findById({ _id: id });
     } catch (err) {
-      return {
-        statusCode: 500,
-        Error: err,
-      };
+      throw error;
     }
   }
+
   static async deleteQuery(id) {
     try {
-      let query = await Query.findByIdAndDelete({ _id: id });
-      return {
-        Status: 200,
-        Query: query,
-      };
+      return await Query.findByIdAndDelete({ _id: id });
     } catch (err) {
-      return {
-        statusCode: 500,
-        Error: err,
-      };
+      throw error;
     }
   }
 }

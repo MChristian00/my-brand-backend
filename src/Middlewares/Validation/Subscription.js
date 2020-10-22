@@ -1,9 +1,9 @@
 import Joi from "joi";
 
-export default class SubValidation {
+export default class SubscrValidation {
   static async subscribeFormValidation(req, res, next) {
     const SCHEMA = Joi.object({
-      Name: Joi.string().min(3).required(),
+      Name: Joi.string().min(3).max(24).required(),
       Email: Joi.string().email().required(),
     });
     try {
@@ -12,9 +12,9 @@ export default class SubValidation {
         return res.status(400).json({
           Error: error.details[0].message,
         });
-      else next();
+      else return next();
     } catch (err) {
-      console.log(err);
+      res.status(400).send(err);
     }
   }
 }

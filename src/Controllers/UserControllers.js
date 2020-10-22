@@ -1,27 +1,17 @@
 import bcrypt from "bcrypt";
-import User from "../Database/Models/User";
 import { generateToken } from "../Helpers/generateToken";
-import BlogServices from "../Services/BlogServices";
 import UserServices from "../Services/UserServices";
 
+const { registerUser, loginUser, updateProfile } = UserServices;
 export default class UserControllers {
   static async register(req, res) {
     const { Firstname, Lastname, Email, Role, Password } = req.body;
     try {
       let hash = bcrypt.hashSync(Password, 10);
-      await User.create(
-        {
-          _id: mongoose.Types.ObjectId(),
-          Firstname,
-          Lastname,
-          Email,
-          Role,
-          Password: hash,
-        },
-        (err, user) => {
-          if (err) return res.status(500).send(err);
+      await registerUser(Firstname, Lastname, Email, Role, hash).then(
+        (data) => {
           let token = generateToken({
-            _id: user._id,
+            _id: data._id,
             Firstname,
             Lastname,
             Email,
@@ -41,12 +31,15 @@ export default class UserControllers {
   static async login(req, res) {
     const { Email, Password } = req.body;
     try {
-      await UserServices.loginUser(Email).then((user) => {
+      await loginUser(Email).then((user) => {
         if (user) {
+          let { _id, Email, Firstname, Lastname, Role } = user;
           let token = generateToken({
-            _id: user._id,
-            Email: user.Email,
-            Role: user.Role,
+            _id,
+            Email,
+            Firstname,
+            Lastname,
+            Role,
           });
           let isValid = user
             ? bcrypt.compareSync(Password, user.Password)
@@ -57,7 +50,7 @@ export default class UserControllers {
               Token: token,
             });
         }
-        res.status(40).json({
+        res.status(404).json({
           Message: "Wrong credentials",
         });
       });
@@ -71,22 +64,18 @@ export default class UserControllers {
     const { id } = req.params;
     try {
       let hash = bcrypt.hashSync(Password, 10);
-      await UserServices.updateProfile(id,Email,hash).then(user=>{
-        
-      })
-        (err, user) => {
-          if (err) return res.status(500).send(err);
-          res.status(201).json({
-            Message: "User profile updated",
-          });
-        }
-      );
+      await updateProfile(id, Email, hash).then((user) => {
+        res.status(201).json({
+          Message: "User profile updated",
+        });
+      });
     } catch (error) {
       res.status(400).send(error);
     }
   }
 
   static async logout(req, res) {
+    console.log(req.userData);
     res.status(200).json({
       Message: "Successfully logged out",
     });
