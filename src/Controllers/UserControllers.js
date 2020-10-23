@@ -5,24 +5,25 @@ import UserServices from "../Services/UserServices";
 const { registerUser, loginUser, updateProfile } = UserServices;
 export default class UserControllers {
   static async register(req, res) {
-    const { Firstname, Lastname, Email, Role, Password } = req.body;
+    const { Firstname, Lastname, Email, Password } = req.body;
     try {
       let hash = bcrypt.hashSync(Password, 10);
-      await registerUser(Firstname, Lastname, Email, Role, hash).then(
-        (data) => {
+      await registerUser(Firstname, Lastname, Email, hash)
+        .then((data) => {
           let token = generateToken({
             _id: data._id,
             Firstname,
             Lastname,
             Email,
-            Role,
           });
           res.status(201).json({
             Message: "User added",
             Token: token,
           });
-        }
-      );
+        })
+        .catch((error) => {
+          res.status(500).send(error);
+        });
     } catch (error) {
       res.status(400).send(error);
     }
@@ -75,7 +76,7 @@ export default class UserControllers {
   }
 
   static async logout(req, res) {
-    console.log(req.userData);
+    req.userData = {};
     res.status(200).json({
       Message: "Successfully logged out",
     });

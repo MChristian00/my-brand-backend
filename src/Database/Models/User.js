@@ -19,6 +19,8 @@ let User = mongoose.model(
       },
       Role: {
         type: String,
+        trim: true,
+        default: "user",
       },
       Email: {
         type: String,

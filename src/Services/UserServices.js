@@ -2,14 +2,13 @@ import mongoose from "mongoose";
 import User from "../Database/Models/User";
 
 export default class UserServices {
-  static async registerUser(Firstname, Lastname, Email, Role, hash) {
+  static async registerUser(Firstname, Lastname, Email, hash) {
     try {
       return await User.create({
         _id: mongoose.Types.ObjectId(),
         Firstname,
         Lastname,
         Email,
-        Role,
         Password: hash,
       });
     } catch (error) {
