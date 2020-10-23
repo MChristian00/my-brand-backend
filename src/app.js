@@ -11,10 +11,11 @@ dotenv.config();
 
 const DB = mongoose.connection;
 
-mongoose.connect("mongodb://localhost/MY_BRAND_DB", {
+mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 //Listen to DB
@@ -38,6 +39,13 @@ app.use("/api/queries", QueryRoutes);
 app.use("/api/blogs", BlogRoutes);
 app.use("/api/auth", UserRoutes);
 app.use("/api/subscribe", SubscriptionRoutes);
+
+// For an unavailable route
+app.use((req, res, next) => {
+  res.status(404).json({
+    Message: "URL UNAVAILABLE",
+  });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

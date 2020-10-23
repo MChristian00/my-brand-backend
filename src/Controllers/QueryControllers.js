@@ -1,16 +1,89 @@
+import mongoose from "mongoose";
 import Query from "../Database/Models/Query";
+import { QueryServices } from "../Services/QueryServices";
 
+const { getAllQueries, getQuery, addQuery, deleteQuery } = QueryServices;
 export default class QueryControllers {
   static async getAllQueries(req, res) {
-    res.status(200).json({});
+    try {
+      await getAllQueries()
+        .then((Queries) => {
+          if (Queries.length)
+            return res.status(200).json({
+              Message: `${queries.length} Queries retrieved`,
+              Queries: Queries,
+            });
+          return res.status(200).json({
+            Message: `No Queries added yet`,
+          });
+        })
+        .catch((error) => {
+          res.status(500).send(error);
+        });
+    } catch (error) {
+      res.status(400).send(error);
+    }
   }
+
   static async getQuery(req, res) {
-    res.status(200).json({});
+    let { id } = req.params;
+    try {
+      await getQuery(id)
+        .then((Query) => {
+          if (Query)
+            return res.status(200).json({
+              Message: "Query retrieved",
+              Query,
+            });
+          return res.status(404).json({
+            Message: `Resource not found`,
+          });
+        })
+        .catch((error) => {
+          res.status(500).send(error);
+        });
+    } catch (error) {
+      res.status(400).send(error);
+    }
   }
-  static async deleteQuery(req, res) {
-    res.status(200).json({});
-  }
+
   static async addQuery(req, res) {
-    res.status(200).json({});
+    let { QueryOwner, Email, QueryContent } = req.body;
+    try {
+      await addQuery(QueryOwner, Email, QueryContent)
+        .then((Query) => {
+          return res.status(201).json({
+            Message: "Query sent",
+            Query,
+          });
+        })
+        .catch((error) => {
+          res.status(500).send(error);
+        });
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+
+  static async deleteQuery(req, res) {
+    let { id } = req.params;
+    try {
+      await deleteQuery(id)
+        .then((Query) => {
+          if (Query)
+            return res.status(200).json({
+              Message: "Query deleted",
+              Query: Query,
+            });
+          return res.status(404).json({
+            Message: `Resouece not found`,
+          });
+        })
+        .catch((error) => {
+          res.status(500).send(error);
+        });
+    } catch (error) {
+      res.status(400).send(error);
+    }
   }
 }
