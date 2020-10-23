@@ -89,7 +89,6 @@ export default class BlogControllers {
     let { Content } = req.body;
     let { Firstname, Lastname } = req.userData;
     let Owner = `${Firstname} ${Lastname}`;
-
     try {
       await BlogServices.commentBlog(id, Owner, Content)
         .then((Blog) => {
