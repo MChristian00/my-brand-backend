@@ -22,7 +22,9 @@ export default class UserControllers {
           });
         })
         .catch((error) => {
-          res.status(500).send(error);
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);
@@ -32,29 +34,35 @@ export default class UserControllers {
   static async login(req, res) {
     const { Email, Password } = req.body;
     try {
-      await loginUser(Email).then((user) => {
-        if (user) {
-          let { _id, Email, Firstname, Lastname, Role } = user;
-          let token = generateToken({
-            _id,
-            Email,
-            Firstname,
-            Lastname,
-            Role,
-          });
-          let isValid = user
-            ? bcrypt.compareSync(Password, user.Password)
-            : null;
-          if (isValid)
-            return res.json({
-              Message: "User successfully logged in",
-              Token: token,
+      await loginUser(Email)
+        .then((user) => {
+          if (user) {
+            let { _id, Email, Firstname, Lastname, Role } = user;
+            let token = generateToken({
+              _id,
+              Email,
+              Firstname,
+              Lastname,
+              Role,
             });
-        }
-        res.status(404).json({
-          Message: "Wrong credentials",
+            let isValid = user
+              ? bcrypt.compareSync(Password, user.Password)
+              : null;
+            if (isValid)
+              return res.json({
+                Message: "User successfully logged in",
+                Token: token,
+              });
+          }
+          res.status(404).json({
+            Message: "Wrong credentials",
+          });
+        })
+        .catch((error) => {
+          res.status(500).json({
+            Error: error,
+          });
         });
-      });
     } catch (error) {
       res.status(400).send(error);
     }
@@ -65,11 +73,17 @@ export default class UserControllers {
     const { id } = req.params;
     try {
       let hash = bcrypt.hashSync(Password, 10);
-      await updateProfile(id, Email, hash).then((user) => {
-        res.status(201).json({
-          Message: "User profile updated",
+      await updateProfile(id, Email, hash)
+        .then((user) => {
+          res.status(201).json({
+            Message: "User profile updated",
+          });
+        })
+        .catch((error) => {
+          res.status(500).json({
+            Error: error,
+          });
         });
-      });
     } catch (error) {
       res.status(400).send(error);
     }

@@ -14,7 +14,7 @@ export const checkAuthToken = (req, res, next) => {
   }
   if (authorization.split(" ")[0] !== "Bearer") {
     return res.status(400).json({
-      Message: "Invalid token",
+      Error: "Invalid token",
     });
   }
 

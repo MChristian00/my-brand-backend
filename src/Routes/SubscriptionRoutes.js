@@ -1,14 +1,17 @@
 import { Router } from "express";
-import SubcValidation from "../Middlewares/Validation/Subscription";
+import SubscriptionControllers from "../Controllers/SubscriptionControllers";
+import SubscrValidation from "../Middlewares/Validation/Subscription";
+import { checkAuthToken } from "../Middlewares/CheckAuthToken";
+import { checkAdmin } from "../Middlewares/CheckAdmin";
 
 const router = Router();
+const { addSubscr, getSubscr, deleteSubscr } = SubscriptionControllers;
+const { subscrFormValidation } = SubscrValidation;
 
-router.get("/", (req, res) => {
-  res.status(200).json({});
-});
+router.post("/add", subscrFormValidation, addSubscr);
 
-router.post("/add", (req, res) => {
-  res.status(200).json({});
-});
+router.get("/", [checkAuthToken, checkAdmin], getSubscr);
+
+router.delete("/:id", deleteSubscr);
 
 export default router;

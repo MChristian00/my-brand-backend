@@ -10,11 +10,13 @@ export default class BlogControllers {
               Blogs,
             });
           return res.status(404).json({
-            Message: "No Blogs added yet",
+            Error: "No Blogs added yet",
           });
         })
         .catch((error) => {
-          res.status(500).send(error);
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);
@@ -32,11 +34,13 @@ export default class BlogControllers {
               Blog,
             });
           return res.status(404).json({
-            Message: "Resource not found",
+            Error: "Resource not found",
           });
         })
         .catch((error) => {
-          res.status(500).send(error);
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);
@@ -53,8 +57,10 @@ export default class BlogControllers {
             Blog,
           });
         })
-        .catch((err) => {
-          res.status(500).send(error);
+        .catch((error) => {
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);
@@ -73,11 +79,13 @@ export default class BlogControllers {
               Blog,
             });
           return res.status(404).json({
-            Message: "Resource not found",
+            Error: "Resource not found",
           });
         })
         .catch((error) => {
-          res.status(500).send(error);
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);
@@ -98,11 +106,13 @@ export default class BlogControllers {
               Blog,
             });
           return res.status(404).json({
-            Message: "Resource not found",
+            Error: "Resource not found",
           });
         })
         .catch((error) => {
-          res.status(500).send(error);
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);
@@ -120,11 +130,13 @@ export default class BlogControllers {
               Blog,
             });
           return res.status(404).json({
-            Message: "Resource not found",
+            Error: "Resource not found",
           });
         })
         .catch((error) => {
-          res.status(500).send(error);
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);

@@ -38,7 +38,7 @@ app.use(json());
 app.use("/api/queries", QueryRoutes);
 app.use("/api/blogs", BlogRoutes);
 app.use("/api/auth", UserRoutes);
-app.use("/api/subscribe", SubscriptionRoutes);
+app.use("/api/subscription", SubscriptionRoutes);
 
 // For an unavailable route
 app.use((req, res, next) => {

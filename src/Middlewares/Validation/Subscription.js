@@ -1,9 +1,9 @@
 import Joi from "joi";
 
 export default class SubscrValidation {
-  static async subscribeFormValidation(req, res, next) {
+  static async subscrFormValidation(req, res, next) {
     const SCHEMA = Joi.object({
-      Name: Joi.string().min(3).max(24).required(),
+      Name: Joi.string().min(3).required(),
       Email: Joi.string().email().required(),
     });
     try {
