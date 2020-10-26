@@ -18,7 +18,9 @@ export default class QueryControllers {
           });
         })
         .catch((error) => {
-          res.status(500).send(error);
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);
@@ -36,11 +38,13 @@ export default class QueryControllers {
               Query,
             });
           return res.status(404).json({
-            Message: `Resource not found`,
+            Error: `Resource not found`,
           });
         })
         .catch((error) => {
-          res.status(500).send(error);
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);
@@ -58,7 +62,9 @@ export default class QueryControllers {
           });
         })
         .catch((error) => {
-          res.status(500).send(error);
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);
@@ -76,11 +82,13 @@ export default class QueryControllers {
               Query: Query,
             });
           return res.status(404).json({
-            Message: `Resouece not found`,
+            Error: `Resouece not found`,
           });
         })
         .catch((error) => {
-          res.status(500).send(error);
+          res.status(500).json({
+            Error: error,
+          });
         });
     } catch (error) {
       res.status(400).send(error);
