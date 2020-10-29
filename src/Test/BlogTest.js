@@ -50,33 +50,47 @@ describe("BLOG ROUTES", () => {
       .get("/api/blogs/:id")
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body).to.contain("Blog");
+        expect(res.body).to.haveOwnProperty("Blog");
+        expect(res.body.Blog).to.haveOwnProperty("_id");
+        expect(res.body.Blog).to.haveOwnProperty("Title");
+        expect(res.body.Blog).to.haveOwnProperty("Content");
         done(err);
       });
   });
 
   it("should return an edited blog", (done) => {
+    let updatedBlog = {
+      Title: "BLOG NOVA(edited)",
+      Content:
+        "Lorem ipsum dolor Lorem ipsum dolorLorem ipsum dolorLorem ipsum dolorLorem ipsum dolorLorem ipsum dolorLorem ipsum dolorLorem ipsum dolorLorem ipsum dolorLorem ipsum dolorLorem ipsum dolor.",
+    };
     chai
       .request(app)
-      .put("/api/blogs/:id")
+      .put(`/api/blogs/${blogID}`)
       .set({ Authorization: `Bearer ${token}` })
+      .send(updatedBlog)
       .end((err, res) => {
         expect(res).to.have.status(201);
-        expect(res.body).to.contain("Blog");
-        expect(res.body.Blog).to.be.a("object");
+        expect(res.body).to.haveOwnProperty("Blog");
+        expect(res.body.Blog).to.haveOwnProperty("_id");
+        expect(res.body.Blog).to.haveOwnProperty("Title");
+        expect(res.body.Blog).to.haveOwnProperty("Content");
         done(err);
       });
   });
 
   it("should return blog with a comment", (done) => {
+    let comment = {
+      Content: "Lorem ipsum dolor Lorem ipsum dolorL",
+    };
     chai
       .request(app)
-      .put("/api/blogs/comment/:id")
+      .put(`/api/blogs/comment/${blogID}`)
       .set({ Authorization: `Bearer ${token}` })
+      .send(comment)
       .end((err, res) => {
         expect(res).to.have.status(201);
         expect(res.body).to.contain("Blog");
-        expect(res.body.Blog.Comments).to.be.a("array");
         done(err);
       });
   });
