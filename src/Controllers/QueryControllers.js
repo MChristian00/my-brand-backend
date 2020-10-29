@@ -10,8 +10,8 @@ export default class QueryControllers {
         .then((Queries) => {
           if (Queries.length)
             return res.status(200).json({
-              Message: `${queries.length} Queries retrieved`,
-              Queries: Queries,
+              Message: `${Queries.length} Queries retrieved`,
+              Queries,
             });
           return res.status(200).json({
             Message: `No Queries added yet`,

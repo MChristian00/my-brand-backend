@@ -4,18 +4,19 @@ import Blog from "../Database/Models/Blog";
 export default class BlogServices {
   static async getAllBlogs() {
     try {
-      return await Blog.find({});
+      return await Blog.find({}).sort({ createdAt: -1 });
     } catch (err) {
       throw err;
     }
   }
 
-  static async addBlog(Title, Content) {
+  static async addBlog(Title, Content, Picture) {
     try {
       return await Blog.create({
         _id: mongoose.Types.ObjectId(),
         Title,
         Content,
+        Picture,
         Comments: [],
       });
     } catch (err) {

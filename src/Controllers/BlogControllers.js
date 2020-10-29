@@ -48,9 +48,9 @@ export default class BlogControllers {
   }
 
   static async addBlog(req, res) {
-    let { Title, Content } = req.body;
+    let { Title, Content, Picture } = req.body;
     try {
-      await BlogServices.addBlog(Title, Content)
+      await BlogServices.addBlog(Title, Content, Picture)
         .then((Blog) => {
           return res.status(201).json({
             Message: "Blog created",
