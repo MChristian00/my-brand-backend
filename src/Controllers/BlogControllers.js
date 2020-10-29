@@ -10,7 +10,7 @@ export default class BlogControllers {
               Blogs,
             });
           return res.status(404).json({
-            Error: "No Blogs added yet",
+            Message: "No Blogs added yet",
           });
         })
         .catch((error) => {
