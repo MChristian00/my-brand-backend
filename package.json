@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src -S",
-    "build": "pm run clean && npm run build-babel",
+    "build": "npm run clean && npm run build-babel",
     "start": "npm run build && node ./build/app.js",
     "test": "mocha 'src/Test' -r core-js -r regenerator-runtime -r @babel/register || true",
     "dev": "nodemon --exec babel-node ./src/app.js"
