@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/app.js",
+    "clean":"rm -rf build && mkdir ./build",
+    "build-babel":"babel -d ./build ./src",
+    "build":"npm run clean && npm run build-babel",
+    "start": "npm run build && node -r regenerator-runtime ./build/app.js",
     "test": "mocha 'src/Test' -r core-js -r regenerator-runtime -r @babel/register || true",
     "dev": "nodemon --exec babel-node ./src/app.js"
   },
@@ -35,6 +38,7 @@
     "regenerator-runtime": "^0.13.7"
   },
   "engines": {
-    "node": "12.18.x"
+    "node": "12.18.x",
+    "npm": "6.14.x"
   }
 }
