@@ -32,6 +32,9 @@ let User = mongoose.model(
         type: String,
         required: true,
       },
+      Picture: {
+        type: String,
+      },
     },
     {
       timestamps: true,
