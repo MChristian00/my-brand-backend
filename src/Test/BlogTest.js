@@ -2,24 +2,20 @@ import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
 import app from "../app";
 import Blog from "../Database/Models/Blog";
-
-let token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjkxYjI2MGQyOTVmN2MzMzRkODhhYjkiLCJGaXJzdG5hbWUiOiJhZG1pbiIsIkxhc3RuYW1lIjoiYWRtaW4iLCJFbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsIlJvbGUiOiJhZG1pbiIsImlhdCI6MTYwMzM4MzkwNH0.zlm6wDYtJMJk4bdTYuUGgZzLuZhHqruKKQFbFTo0hlQ";
-let blogID = "5f993cf06b4cc18d468e6ffe";
+import { userData } from "./UserTest";
 
 chai.use(chaiHttp);
 
+let token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjkxYjI2MGQyOTVmN2MzMzRkODhhYjkiLCJGaXJzdG5hbWUiOiJhZG1pbiIsIkxhc3RuYW1lIjoiYWRtaW4iLCJFbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsIlJvbGUiOiJhZG1pbiIsImlhdCI6MTYwMzM4MzkwNH0.zlm6wDYtJMJk4bdTYuUGgZzLuZhHqruKKQFbFTo0hlQ";
+let blogID;
+let userID;
+
 describe("BLOG ROUTES", () => {
-  it("should return array of all blogs", (done) => {
-    chai
-      .request(app)
-      .get("/api/blogs")
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body.Blogs).to.be.a("array");
-        // expect(res.body.Blogs).to.have.lengthOf(0);
-        done(err);
-      });
+  before(() => {
+    Blog.remove({}, (err) => {
+      console.log(err);
+    });
   });
 
   it("should return an added blog", (done) => {
@@ -35,6 +31,7 @@ describe("BLOG ROUTES", () => {
       .set({ Authorization: `Bearer ${token}` })
       .send(newBlog)
       .end((err, res) => {
+        blogID = res.body.Blog._id;
         expect(res).to.have.status(201);
         expect(res.body).haveOwnProperty("Blog");
         expect(res.body.Blog).to.haveOwnProperty("_id");
@@ -44,10 +41,22 @@ describe("BLOG ROUTES", () => {
       });
   });
 
+  it("should return array of all blogs", (done) => {
+    chai
+      .request(app)
+      .get("/api/blogs")
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.Blogs).to.be.a("array");
+        expect(res.body.Blogs).to.have.lengthOf(1);
+        done(err);
+      });
+  });
+
   it("should get a single blog", (done) => {
     chai
       .request(app)
-      .get("/api/blogs/:id")
+      .get(`/api/blogs/${blogID}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.haveOwnProperty("Blog");
@@ -90,7 +99,11 @@ describe("BLOG ROUTES", () => {
       .send(comment)
       .end((err, res) => {
         expect(res).to.have.status(201);
-        expect(res.body).to.contain("Blog");
+        expect(res.body).to.haveOwnProperty("Blog");
+        expect(res.body.Blog).to.haveOwnProperty("_id");
+        expect(res.body.Blog).to.haveOwnProperty("Title");
+        expect(res.body.Blog).to.haveOwnProperty("Content");
+        expect(res.body.Blog).to.haveOwnProperty("Comments").be.a("array");
         done(err);
       });
   });
