@@ -6,7 +6,7 @@ export default class SubscriptionControllers {
     try {
       await SubscriptionServices.addSubscr(Name, Email)
         .then((data) => {
-          res.status(200).json({
+          res.status(201).json({
             Message: "Subscription successfull",
             Subscription: data,
           });
@@ -29,7 +29,7 @@ export default class SubscriptionControllers {
           if (data.length)
             return res.status(200).json({
               Message: `${data.length} Subscription retrieved`,
-              Subscription: data,
+              Subscriptions: data,
             });
           return res.status(200).json({
             Message: "No subscriptions yet",
