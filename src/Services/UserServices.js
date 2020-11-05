@@ -24,13 +24,14 @@ export default class UserServices {
       throw error;
     }
   }
-  static async updateProfile(id, Email, hash) {
+  static async updateProfile(id, Email, Picture, hash) {
     try {
       return await User.findByIdAndUpdate(
         { _id: id },
         {
           Email,
           Password: hash,
+          Picture,
         }
       );
     } catch (error) {

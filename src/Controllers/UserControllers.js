@@ -37,13 +37,14 @@ export default class UserControllers {
       await loginUser(Email)
         .then((user) => {
           if (user) {
-            let { _id, Email, Firstname, Lastname, Role } = user;
+            let { _id, Email, Firstname, Lastname, Role, Picture } = user;
             let token = generateToken({
               _id,
               Email,
               Firstname,
               Lastname,
               Role,
+              Picture,
             });
             let isValid = user
               ? bcrypt.compareSync(Password, user.Password)
@@ -69,14 +70,15 @@ export default class UserControllers {
   }
 
   static async updateProfile(req, res) {
-    const { Email, Password } = req.body;
+    const { Email, Password, Picture } = req.body;
     const { id } = req.params;
     try {
       let hash = bcrypt.hashSync(Password, 10);
-      await updateProfile(id, Email, hash)
-        .then((user) => {
+      await updateProfile(id, Email, Picture, hash)
+        .then((data) => {
           res.status(201).json({
             Message: "User profile updated",
+            User: data,
           });
         })
         .catch((error) => {
