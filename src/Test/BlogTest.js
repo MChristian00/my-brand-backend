@@ -13,9 +13,7 @@ let userID;
 
 describe("BLOG ROUTES", () => {
   before(() => {
-    Blog.remove({}, (err) => {
-      console.log(err);
-    });
+    Blog.remove({}, (err) => {});
   });
 
   it("should return an added blog", (done) => {

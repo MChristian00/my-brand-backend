@@ -8,8 +8,9 @@
     "build-babel": "babel -d ./build ./src",
     "build": "npm run clean && npm run build-babel",
     "start": "node -r regenerator-runtime ./build/app.js",
-    "test": "mocha 'src/Test' -r core-js -r regenerator-runtime -r @babel/register || true",
-    "dev": "nodemon --exec babel-node ./src/app.js"
+    "test": "nyc mocha 'src/Test' -r regenerator-runtime -r @babel/register --timeout 10000 --exit || true",
+    "dev": "nodemon --exec babel-node ./src/app.js",
+    "coverage": "nyc --reporter=lcov npm test"
   },
   "keywords": [],
   "author": "",
