@@ -2,7 +2,7 @@ import { Router } from "express";
 import UserControllers from "../Controllers/UserControllers";
 import UserValidation from "../Middlewares/Validation/User";
 import { checkAuthToken } from "../Middlewares/CheckAuthToken";
-import { checkAdmin } from "../Middlewares/checkAdmin";
+import { checkAdmin } from "../Middlewares/CheckAdmin";
 
 const router = Router();
 const { registerFormValidation, loginFormValidation } = UserValidation;

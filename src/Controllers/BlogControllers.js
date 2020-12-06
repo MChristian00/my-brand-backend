@@ -10,7 +10,7 @@ export default class BlogControllers {
               Blogs,
             });
           return res.status(404).json({
-            Error: "No Blogs added yet",
+            Message: "No Blogs added yet",
           });
         })
         .catch((error) => {
@@ -48,9 +48,9 @@ export default class BlogControllers {
   }
 
   static async addBlog(req, res) {
-    let { Title, Content } = req.body;
+    let { Title, Content, Picture } = req.body;
     try {
-      await BlogServices.addBlog(Title, Content)
+      await BlogServices.addBlog(Title, Content, Picture)
         .then((Blog) => {
           return res.status(201).json({
             Message: "Blog created",

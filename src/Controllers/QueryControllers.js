@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-import Query from "../Database/Models/Query";
 import { QueryServices } from "../Services/QueryServices";
 
 const { getAllQueries, getQuery, addQuery, deleteQuery } = QueryServices;
@@ -10,8 +8,8 @@ export default class QueryControllers {
         .then((Queries) => {
           if (Queries.length)
             return res.status(200).json({
-              Message: `${queries.length} Queries retrieved`,
-              Queries: Queries,
+              Message: `${Queries.length} Queries retrieved`,
+              Queries,
             });
           return res.status(200).json({
             Message: `No Queries added yet`,
@@ -82,7 +80,7 @@ export default class QueryControllers {
               Query: Query,
             });
           return res.status(404).json({
-            Error: `Resouece not found`,
+            Error: `Resource not found`,
           });
         })
         .catch((error) => {

@@ -22,7 +22,7 @@ export default class UserValidation {
     const SCHEMA = Joi.object({
       Firstname: Joi.string().min(2).required(),
       Lastname: Joi.string().min(2).required(),
-      Role: Joi.string().required(),
+      Role: Joi.string(),
       Email: Joi.string().email().required(),
       Password: Joi.string().min(7).required(),
       retype_Password: Joi.ref("Password"),
